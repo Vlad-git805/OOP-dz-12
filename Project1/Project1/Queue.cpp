@@ -3,11 +3,9 @@
 Queue::Queue(int maxSize)
 {
 	this->maxSize = maxSize;
-	data = new Document[maxSize];
+	data = new Client[maxSize];
 	priorities = new int[maxSize];
 	size = 0;
-	statistic = new Document[maxSize];
-	statisticSize = 0;
 }
 
 Queue::~Queue()
@@ -16,25 +14,17 @@ Queue::~Queue()
 		delete[]data;
 	if (priorities != nullptr)
 		delete[]priorities;
-	if (statistic != nullptr)
-		delete[]statistic;
 }
 
 
-void Queue::AddWithPriority(Document elem)
+void Queue::AddClientToPrint(Client& client)
 {
 	if (!IsFull())
 	{
-		SYSTEMTIME st;
-		GetSystemTime(&st);
-		data[size] = elem;
-		priorities[size] = elem.prior;
-		statistic[statisticSize] = elem;
-		statistic[statisticSize].time.hour = st.wHour;
-		statistic[statisticSize].time.minits = st.wMinute;
-		statistic[statisticSize].time.second = st.wSecond;
+		data[size] = client;
+		priorities[size] = client.prior;
 		++size;
-		++statisticSize;
+		
 		for (int i = 0; i < size - 1; i++) {
 			for (int j = 0; j < size - i - 1; j++) {
 				if (data[j].prior > data[j + 1].prior) {
@@ -43,36 +33,33 @@ void Queue::AddWithPriority(Document elem)
 				}
 			}
 		}
-		Sleep(1000);
 	}
 }
 
-Document Queue::ExtractElem()
+void Queue::ExtractElem()
 {
 	if (!IsEmpty())
 	{
-		// Зберігаємо перший елемент		
-		//int prIndex = 0;
-		//int prValue = priorities[0];
-		//// Пошук найпріорітетнішого елемента (мінімальне значення)
-		//for (int i = 1; i < size; ++i)
-		//{
-		//	if (priorities[i] < prValue)
-		//	{
-		//		prValue = priorities[i];
-		//		prIndex = i;
-		//	}
-		//}
-		//int element = data[prIndex];
-		//// Підсовуємо всі елементи
-		//for (int i = prIndex; i < size - 1; i++)
-		//{
-		//	data[i] = data[i + 1];
-		//	priorities[i] = priorities[i + 1];
-		//}
-		//// Проста черга
 
-		Document temp = data[0];
+		SYSTEMTIME st;
+		GetSystemTime(&st);
+		string time_doc;
+		int str = 0;
+
+		time_doc += "Time ";
+		str = st.wHour;
+		time_doc += to_string(str);
+		str = st.wMinute;
+		time_doc += ":";
+		time_doc += to_string(str);
+		str = st.wSecond;
+		time_doc += ":";
+		time_doc += to_string(str);
+		time_doc += "  name :";
+		time_doc += data[0].name;
+
+		stat.Enqueue(time_doc);
+
 
 		for (int i = 0; i < size - 1; i++)
 		{
@@ -82,27 +69,13 @@ Document Queue::ExtractElem()
 
 		--size;	
 
-		return temp;
 	}
 }
 
-Document Queue::Peek() const
+Client Queue::Peek() const
 {
 	if (!IsEmpty())
 	{
-		// Зберігаємо перший елемент		
-		//int prIndex = 0;
-		//int prValue = priorities[0];
-		//// Пошук найпріорітетнішого елемента
-		//for (int i = 1; i < size; ++i)
-		//{
-		//	if (priorities[i] < prValue)
-		//	{
-		//		prValue = priorities[i];
-		//		prIndex = i;
-		//	}
-		//}
-
 		return data[0];
 	}
 }
@@ -131,14 +104,12 @@ void Queue::Show() const
 {
 	for (int i = 0; i < size; i++)
 	{
-		data[i].Print();
+		cout << "_____________________ " << "Client " << i + 1 <<" _____________________" << endl;
+		data[i].PrintAllInfo();
 	}
 }
 
-void Queue::ShowStatistic()const
+void Queue::ShowStat() const
 {
-	for (int i = 0; i < statisticSize; i++)
-	{
-		cout << "Name: " << statistic[i].name << "; Time: " << statistic[i].time.hour << ":" << statistic[i].time.minits << ":" << statistic[i].time.second << endl;
-	}
+	stat.Show();
 }

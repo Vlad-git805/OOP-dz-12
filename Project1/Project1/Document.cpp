@@ -1,12 +1,11 @@
 #include "Document.h"
 
-Document::Document() : name(""), siz(0), prior(NON) {}
+Document::Document() : name("") {}
 
-Document::Document(string name, int siz, Priorit pr)  : name(name), siz(siz), prior(pr)  {}
+Document::Document(string name)  : name(name) {}
 
 void Document::Print()
 {
-	cout << "Name: " << name << " Size: " << siz << " Priority: " << prior << endl;
+	cout << "Name: " << name << endl;
 }
 
-Document::~Document() {}

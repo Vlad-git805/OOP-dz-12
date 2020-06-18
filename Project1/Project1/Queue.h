@@ -2,27 +2,29 @@
 #include <iostream>
 #include <string>
 #include "Document.h"
+#include "Client.h"
+#include "QueueDefault.h"
 #include <Windows.h>
 using namespace std;
 
 class Queue
 {
-	Document * data;
+private:
+	Client* data;
 	int * priorities;
 	int maxSize;
 	int size;
-	Document * statistic;
-	int statisticSize;
+	QueueDefault stat;
 public:
 	Queue(int maxSize);
 	~Queue();
-	void AddWithPriority(Document elem);
-	Document ExtractElem();
-	Document Peek() const;
+	void AddClientToPrint(Client& client);
+	void ExtractElem();
+	Client Peek() const;
 	bool IsEmpty() const;
 	bool IsFull() const;
 	int GetCount() const;
 	void Clear();
 	void Show() const;
-	void ShowStatistic()const;
+	void ShowStat()const;
 };

@@ -9,29 +9,37 @@ using namespace std;
 int main()
 {
 
-	Document d1("d1", 5, FIRST);
-	Document d2("d2", 7, SECOND);
-	Document d3("d3", 12, THIRD);
-	Document d4("d4", 1234, FOUR);
-	Document d5("d5", 8, FIVE);
+	Queue q1(10);
 
-	Queue q(10);
+	Client cl1("Vlad", THIRD);
+	Document doc1("doc1");
+	Document doc2("doc2");
+	Document doc3("doc3");
 
-	q.AddWithPriority(d2);
-	q.AddWithPriority(d1);
-	q.AddWithPriority(d5);
-	q.AddWithPriority(d4);
-	q.AddWithPriority(d3);
+	cl1.AddDocument(doc1);
+	cl1.AddDocument(doc2);
+	cl1.AddDocument(doc3);
 
-	q.Show();
+	Client cl2("Vas9", FIVE);
+	Document doc123("doc123");
+	Document doc222("doc222");
+	Document doc321("doc321");
 
-	q.ExtractElem();
+	cl2.AddDocument(doc123);
+	cl2.AddDocument(doc222);
+	cl2.AddDocument(doc321);
 
+	q1.AddClientToPrint(cl2);
+	q1.AddClientToPrint(cl1);
+
+	q1.Show();
+
+	q1.ExtractElem();
+	q1.ExtractElem();
+
+	//q1.Show();
 	cout << endl;
-	q.Show();
-	cout << endl<<endl;
-	q.ShowStatistic();
-
+	q1.ShowStat();
 	system("pause");
 	return 0;
 }

@@ -115,13 +115,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Client.cpp" />
     <ClCompile Include="Document.cpp" />
     <ClCompile Include="Queue.cpp" />
+    <ClCompile Include="QueueDefault.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Client.h" />
     <ClInclude Include="Document.h" />
     <ClInclude Include="Queue.h" />
+    <ClInclude Include="QueueDefault.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
